@@ -20,8 +20,8 @@
 
   document.getElementById("form").addEventListener("submit", (e) => {
     e.preventDefault()
-    // alert(e.target[0].value);
-    fetch('/add', { method: 'POST', headers: { "Content-Type": "application/json" }, body: JSON.stringify({ text: e.target[0].value }) })
+    const date = new Date()
+    fetch('/add', { method: 'POST', headers: { "Content-Type": "application/json" }, body: JSON.stringify({ text: e.target[0].value, date: `${date.getHours()}:${date.getMinutes()}` }) })
       .then(() => {
         window.location.reload()
       }).catch(console.log)

@@ -13,10 +13,10 @@ app.get('/', (req, res) => {
 });
 
 app.post('/add', (req, res) => {
-  const { text } = req.body;
+  const { text, date } = req.body;
   
-  const date = new Date(); // Get the current timestamp
-  const newItem = { text: text, date: `${date.getHours()}:${date.getMinutes()}`, id: Date.now() }; // Create a new item with the text and timestamp
+  const id = new Date(); // Get the current timestamp
+  const newItem = { text: text, date, id: Date.now() }; // Create a new item with the text and timestamp
   // Store the new item in the list
   app.locals.list.push(newItem);
   res.send('ok');
