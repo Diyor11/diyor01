@@ -8,7 +8,7 @@
 
 <body>
   <h1>Express App</h1>
-  <form action="/add" method="post">
+  <form id="form">
     <input type="text" name="text" placeholder="Enter text" required>
     <button type="submit">Submit</button>
   </form>
@@ -17,12 +17,21 @@
 
   <script>
     // Function to fetch and display the list
-    const deleteItem = (id) => {
-      fetch(`/list/${id}`, { method: 'DELETE' })
+
+  document.getElementById("form").addEventListener("submit", (e) => {
+    e.preventDefault()
+    // alert(e.target[0].value);
+    fetch('/add', { method: 'POST', headers: { "Content-Type": "application/json" }, body: JSON.stringify({ text: e.target[0].value }) })
       .then(() => {
         window.location.reload()
-      })
-      .catch(error => console.log(error));
+      }).catch(console.log)
+  })
+    const deleteItem = (id) => {
+      fetch(`/list/${id}`, { method: 'DELETE' })
+        .then(() => {
+          window.location.reload()
+        })
+        .catch(error => console.log(error));
     }
 
     function fetchList() {
