@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Express App</title>
+  <link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+  <h1>Express App</h1>
+  <form action="/add" method="post">
+    <input type="text" name="text" placeholder="Enter text" required>
+    <button type="submit">Submit</button>
+  </form>
+  <h2>List:</h2>
+  <ul id="list"></ul>
+
+  <script>
+    // Function to fetch and display the list
+    const deleteItem = (id) => {
+      fetch(`/list/${id}`, { method: 'DELETE' })
+      .then(() => {
+        window.location.reload()
+      })
+      .catch(error => console.log(error));
+    }
+
+    function fetchList() {
+      fetch('/list')
+        .then(response => response.json())
+        .then(data => {
+          const listElement = document.getElementById('list');
+          listElement.innerHTML = '';
+          const items = data.map(({ text, date, id }) => {
+            return `
+              <li>
+                <a target="_blank" href="${text}">${text}</a>
+                <span>${date}</span>
+                <button onclick="deleteItem(${id})">Delete</button>
+              </li>`
+          });
+          listElement.innerHTML = `<ul>${items}</ul>`
+        });
+    }
+
+    fetchList();
+
+  </script>
+</body>
+
+</html>
